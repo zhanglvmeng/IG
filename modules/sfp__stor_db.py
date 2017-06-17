@@ -13,7 +13,7 @@
 
 from sflib import SpiderFoot, SpiderFootPlugin
 
-#存储event事件，最大为1024byte
+
 class sfp__stor_db(SpiderFootPlugin):
     """Storage::::Stores scan results into the back-end SpiderFoot database. You will need this."""
 
@@ -24,7 +24,7 @@ class sfp__stor_db(SpiderFootPlugin):
 
     # Option descriptions
     optdescs = {
-        'maxstorage': "Maximum bytes to store for any piece of information retreived (0 = unlimited.)"
+        'maxstorage': "Max information scan store(0 is unlimited)"
     }
 
     def setup(self, sfc, userOpts=dict()):

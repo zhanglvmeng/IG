@@ -1,0 +1,8 @@
+# Bitcash auto-blacklisting by carlos@bitcash.cz
+# IPs banned for serious abusing of our services (scanning, sniffing, harvesting, dos attacks)
+80.248.225.142 #  80.248.225.142                                 last access 2017-06-03 04:30:01
+54.255.254.45 #   ec2-54-255-254-45.ap-southeast-1.compute.amaz  last access 2017-06-03 06:20:01
+89.197.5.114 #    89-197-5-114.virtual1.co.uk                    last access 2017-06-03 06:45:01
+5.79.68.56 #      linkpad.ru                                     last access 2017-06-03 10:40:02
+31.171.194.30 #   rev-31-171-194-30.egs63.ru                     last access 2017-06-05 20:35:01
+

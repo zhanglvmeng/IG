@@ -116,9 +116,7 @@ if __name__ == '__main__':
 
             # Load and instantiate the module
             sfModules[modName] = dict()
-            #引入各个module模块  比如  modules.sfp__stro_db.pyc
             mod = __import__('modules.' + modName, globals(), locals(), [modName])
-            #python的反射机制，从object mod中找对应的modName
             sfModules[modName]['object'] = getattr(mod, modName)()
             sfModules[modName]['name'] = sfModules[modName]['object'].__doc__.split(":", 5)[0]
             sfModules[modName]['cats'] = sfModules[modName]['object'].__doc__.split(":", 5)[1].split(",")

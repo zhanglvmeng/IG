@@ -16,6 +16,8 @@ import csv
 import time
 import random
 import re
+import logging
+import base64
 from operator import itemgetter
 from copy import deepcopy
 from mako.lookup import TemplateLookup
@@ -24,10 +26,11 @@ from sfdb import SpiderFootDb
 from sflib import SpiderFoot, globalScanStatus
 from sfscan import SpiderFootScanner
 from StringIO import StringIO
+from log import Logger
 
 
 class SpiderFootWebUi:
-    lookup = TemplateLookup(directories=[''])
+    lookup = TemplateLookup(directories=[''], output_encoding='utf-8')
     defaultConfig = dict()
     config = dict()
     token = None
@@ -387,8 +390,11 @@ class SpiderFootWebUi:
         if res is None:
             return self.error("Scan ID not found.")
 
-        templ = Template(filename='dyn/scaninfo.tmpl', lookup=self.lookup)
-        return templ.render(id=id, name=res[0], status=res[5], docroot=self.docroot,
+        scanName = SpiderFoot.znEncode(res[0])
+        target = res[1]
+        templ = Template(filename='dyn/scaninfo.tmpl', lookup=self.lookup, input_encoding='utf-8')
+       # templ = Template(filename='dyn/scaninfo.tmpl', default_filters=['decode.utf8'], input_encoding='utf-8', output_encoding='utf-8')
+        return templ.render(id=id, name=target, status=res[5], docroot=self.docroot,
                             pageid="SCANLIST")
 
     scaninfo.exposed = True
@@ -637,6 +643,7 @@ class SpiderFootWebUi:
         dbh = SpiderFootDb(cfg)
         types = dbh.eventTypes()
         targetType = None
+        scanname = SpiderFoot.znEncode(scanname)
         [scanname, scantarget] = self.cleanUserInput([scanname, scantarget])
 
         if scanname == "" or scantarget == "":
@@ -704,9 +711,10 @@ class SpiderFootWebUi:
         while globalScanStatus.getStatus(scanId) is None:
             print "[info] Waiting for the scan to initialize..."
             time.sleep(1)
-
+        
+        scanname = SpiderFoot.znDecode(scanname)
         if not cli:
-            templ = Template(filename='dyn/scaninfo.tmpl', lookup=self.lookup)
+            templ = Template(filename='dyn/scaninfo.tmpl', lookup=self.lookup, input_encoding='utf-8')
             return templ.render(id=scanId, name=scanname, docroot=self.docroot,
                                 status=globalScanStatus.getStatus(scanId), pageid="SCANLIST")
         else:
@@ -733,6 +741,7 @@ class SpiderFootWebUi:
                 error.append("Scan '" + scaninfo[0] + "' is in a finished state. <a href='/scandelete?id=" + \
                              id + "&confirm=1'>Maybe you want to delete it instead?</a>")
                 errState = True
+
 
             if not errState and (globalScanStatus.getStatus(id) == "ABORTED" or scaninfo[5] == "ABORTED"):
                 error.append("Scan '" + scaninfo[0] + "' is already aborted.")

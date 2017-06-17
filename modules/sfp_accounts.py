@@ -30,8 +30,11 @@ class sfp_accounts(SpiderFootPlugin):
 
     # Option descriptions
     optdescs = {
+        # 通用内部账号查找
         "generic": "Generic internal accounts to not bother looking up externally.",
+        # 只找firstname
         "ignorenamedict": "Don't bother looking up names that are just stand-alone first names (too many false positives).",
+        #
         "ignoreworddict": "Don't bother looking up names that appear in the dictionary.",
         "musthavename": "The username must be mentioned on the social media page to consider it valid (helps avoid false positives).",
         "maxthreads": "Maximum number of simultaneous threads (one thread per site the account is being checked on.)"

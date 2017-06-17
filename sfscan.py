@@ -19,6 +19,7 @@ import threading
 import random
 from copy import deepcopy, copy
 from sfdb import SpiderFootDb
+import logging
 from sflib import SpiderFoot, SpiderFootEvent, SpiderFootTarget, \
     SpiderFootPlugin, globalScanStatus
 
@@ -43,8 +44,11 @@ class SpiderFootScanner(threading.Thread):
         self.temp['targetValue'] = scanTarget
         self.temp['targetType'] = targetType
         self.temp['moduleList'] = moduleList
-        self.temp['scanName'] = scanName
+        self.temp['scanName'] = SpiderFoot.znDecode(scanName)
         self.temp['scanId'] = scanId
+
+    def get_logger(self):
+        return logging.getLogger('sfscan')
 
     # Set the status of the currently running scan (if any)
     def setStatus(self, status, started=None, ended=None):
@@ -68,8 +72,8 @@ class SpiderFootScanner(threading.Thread):
 
     # Start running a scan
     def startScan(self):
+        logging.basicConfig(filename='logger.log', level=logging.DEBUG)
         global globalScanStatus
-
         self.ts = threading.local()
         self.ts.moduleInstances = dict()
         self.ts.sf = SpiderFoot(self.temp['config'])
@@ -228,8 +232,8 @@ class SpiderFootScanner(threading.Thread):
             for module in self.ts.moduleInstances.values():
                 # Register the target with the module
                 module.setTarget(target)
-                print "process" + module
-
+                logging.info( "process==============" + module.__str__())
+                
                 for listenerModule in self.ts.moduleInstances.values():
                     # Careful not to register twice or you will get duplicate events
                     if listenerModule in module._listenerModules:
@@ -237,9 +241,9 @@ class SpiderFootScanner(threading.Thread):
                     # Note the absence of a check for whether a module can register
                     # to itself. That is intentional because some modules will
                     # act on their own notifications (e.g. sfp_dns)!
-                    # 每个module监听所有有watchEvent的module,广播模式。
                     if listenerModule.watchedEvents() is not None:
                         module.registerListener(listenerModule)
+                        logging.info( "list==============" + listenerModule.__str__())
 
             # Now we are ready to roll..
             self.setStatus("RUNNING")
@@ -255,9 +259,11 @@ class SpiderFootScanner(threading.Thread):
 
             # Create the "ROOT" event which un-triggered modules will link events to
             rootEvent = SpiderFootEvent("ROOT", self.ts.targetValue, "", None)
+            logging.info("rootEvent psMod.notifyListeners begining")
             psMod.notifyListeners(rootEvent)
             firstEvent = SpiderFootEvent(self.ts.targetType, self.ts.targetValue,
                                          "SpiderFoot UI", rootEvent)
+            logging.info("firstEvent psMod.notifyListeners begin....")
             psMod.notifyListeners(firstEvent)
 
             # Check in case the user requested to stop the scan between modules 

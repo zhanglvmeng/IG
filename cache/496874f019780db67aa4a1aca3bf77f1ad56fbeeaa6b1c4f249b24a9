@@ -1,0 +1,57 @@
+################################################################
+# abuse.ch SSL IPBL                                            #
+# Last updated: 2017-06-09 09:15:02 (UTC)                      #
+#                                                              #
+# Terms Of Use: https://sslbl.abuse.ch/blacklist/              #
+# For questions please contact sslbl [at] abuse.ch             #
+################################################################
+#
+# DstIP,DstPort
+104.153.108.111,9200,Malware C&C
+104.153.108.150,3281,Malware C&C
+117.199.204.238,443,Quakbot C&C
+123.206.198.12,8888,AKBuilder C&C
+137.74.103.16,9090,Malware C&C
+154.16.220.106,20901,Malware C&C
+154.16.220.161,1101,Malware C&C
+160.202.163.240,9888,Malware C&C
+160.202.163.251,7755,Malware C&C
+173.254.223.124,7777,Malware C&C
+174.127.99.188,8040,Malware C&C
+174.127.99.198,2727,Malware C&C
+174.127.99.212,54689,Malware C&C
+176.9.99.134,443,AKBuilder C&C
+181.234.110.59,443,Quakbot C&C
+181.234.125.7,443,Quakbot C&C
+181.234.131.143,443,Quakbot C&C
+184.75.209.164,5050,Malware C&C
+184.75.209.178,9001,Malware C&C
+184.75.210.206,7262,Malware C&C
+185.101.34.119,1933,Malware C&C
+185.101.34.69,5567,Malware C&C
+185.145.45.228,9018,Malware C&C
+185.29.9.121,7760,Malware C&C
+185.84.181.67,1996,Malware C&C
+185.84.181.69,2245,Malware C&C
+198.12.96.155,2087,Malware C&C
+204.95.99.204,443,Shylock C&C
+213.183.58.44,6466,Malware C&C
+213.183.58.54,7956,Malware C&C
+213.208.129.195,27180,Malware C&C
+217.164.82.62,443,Quakbot C&C
+217.19.223.20,443,Quakbot C&C
+23.105.128.147,2070,Malware C&C
+37.235.49.220,1111,Malware C&C
+46.183.222.37,4040,Malware C&C
+47.88.17.2,25432,Malware C&C
+5.101.4.41,443,Neutrino C&C
+50.2.13.182,2087,Malware C&C
+59.98.97.170,443,Quakbot C&C
+77.48.28.194,5050,Malware C&C
+84.200.65.35,7274,Malware C&C
+89.35.228.205,9090,Malware C&C
+91.236.116.141,1030,Malware C&C
+95.104.2.225,443,TrickBot C&C
+95.140.125.100,9060,Malware C&C
+96.9.69.131,443,TrickBot C&C
+# Number of entries: 47

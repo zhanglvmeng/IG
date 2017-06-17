@@ -1,10 +1,11 @@
+##coding=utf-8
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <script type='text/javascript' src='${docroot}/static/js/spiderfoot.js'></script>
   <script type='text/javascript' src='${docroot}/static/js/viz.js'></script>
   <head>
-    <meta charset="utf-8">
-    <title>SpiderFoot v2.10</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <title>一站式信息收集平台--IG</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -52,28 +53,27 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand-logo" href="${docroot}/"></a>
-          <a class="brand" href="${docroot}/">SpiderFoot</a>
+          <!-- <a class="brand-logo" href="${docroot}/"></a> -->
+          <a class="brand" href="${docroot}/">IG</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
                     <li
 % if pageid == "NEWSCAN":
     class="active"
 % endif
-><a href="${docroot}/newscan"><i class="icon-screenshot"></i>&nbsp;New Scan</a></li>
+><a href="${docroot}/newscan"><i class="icon-screenshot"></i>&nbsp;新建</a></li>
                     <li 
 % if pageid == "SCANLIST": 
     class="active"
 % endif
-><a href="${docroot}/"><i class="icon-list"></i>&nbsp;Scans</a></li>
+><a href="${docroot}/"><i class="icon-list"></i>&nbsp;收集历史</a></li>
                     <li
 % if pageid == "SETTINGS":
     class="active"
 %endif
-><a href="${docroot}/opts"><i class="icon-wrench"></i>&nbsp;Settings</a></li>
+><a href="${docroot}/opts"><i class="icon-wrench"></i>&nbsp;设置</a></li>
             </ul>
             <ul class="nav pull-right">
-                    <li><a href="#aboutmodal" data-toggle="modal"><i class="icon-info-sign"></i>&nbsp;About</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

@@ -30,7 +30,9 @@ import time
 import netaddr
 import urllib2
 import StringIO
+import logging
 import threading
+import base64
 from bs4 import BeautifulSoup, SoupStrainer
 from copy import deepcopy, copy
 
@@ -118,6 +120,40 @@ class SpiderFoot:
                     return None
 
         return val
+    
+    @staticmethod
+    def znEncode(sourceStr):
+        """
+        Process chinese character -> encode
+        """
+        if(isinstance(sourceStr, unicode)):
+            s_after = sourceStr.encode('gb18030')
+            res = base64.b64encode(s_after)
+        else:
+            s_after = sourceStr.decode('utf-8').encode('gb18030')
+            res = base64.b64encode(s_after)
+        return res
+
+    @staticmethod
+    def znEncodeOnly(sourceStr):
+        """
+        Process chinese character -> encode
+        """
+        if(isinstance(sourceStr, unicode)):
+            s_after = sourceStr.encode('gb18030')
+        else:
+            s_after = sourceStr.decode('utf-8').encode('gb18030')
+        return s_after
+
+    @staticmethod
+    def znDecode(sourceStr):
+        """
+        Process chinese character -> decode
+        and template mako just supprt unicode,so we need transfer the str to unicode
+        """
+        s_after = base64.b64decode(sourceStr)
+        res = s_after.decode('gb18030')
+        return res
 
     # Return a format-agnostic collection of tuples to use as the
     # basis for building graphs in various formats.
@@ -1466,6 +1502,7 @@ class SpiderFootPlugin(object):
         eventName = sfEvent.eventType
         eventData = sfEvent.data
         storeOnly = False  # Under some conditions, only store and don't notify
+        logging.basicConfig(filename='logger.log', level=logging.DEBUG)
 
         if eventData is None or (type(eventData) is unicode and len(eventData) == 0):
             #print "No data to send for " + eventName + " to " + listener.__module__
@@ -1518,6 +1555,7 @@ class SpiderFootPlugin(object):
                 return None
 
             #print "EVENT: " + str(sfEvent)
+            logging.info("notifyListeners ........ listener module is " + listener.__str__())
             listener.handleEvent(sfEvent)
 
     # For modules to use to check for when they should give back control
